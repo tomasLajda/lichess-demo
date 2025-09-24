@@ -1,0 +1,30 @@
+services:
+  db: 
+    image: postgres:latest
+    container_name: db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+
+  app:
+    build: ./app
+    container_name: app
+    env_file:
+      - .env
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - ./app/src:/app/src
+      - ./app/package.json:/app/package.json
+    depends_on:
+      - db
+
+volumes:
+  db_data:
