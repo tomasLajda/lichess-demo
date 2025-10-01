@@ -1,7 +1,7 @@
 services:
   db: 
     image: postgres:latest
-    container_name: db
+    container_name: lichess_demo_db
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -14,8 +14,8 @@ services:
       - ${DB_PORT}:${DB_PORT}
 
   app:
-    build: ./app
-    container_name: app
+    build: ./
+    container_name: lichess_demo_app
     env_file:
       - .env
     ports:
